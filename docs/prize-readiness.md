@@ -118,8 +118,8 @@ Run:
 ./scripts/summarize-cost-evidence.py --out-dir .local/cost-evidence/latest
 ```
 
-This writes proof-cycle and localnet transaction cost evidence. The captured
-summary is documented in `docs/cost-evidence-20260626.md`.
+This writes proof-cycle and localnet transaction cost evidence. The current
+reviewer-facing cost note is documented in `docs/cost-evidence-20260727.md`.
 
 ## Pending For Final Prize Submission
 
@@ -131,8 +131,8 @@ summary is documented in `docs/cost-evidence-20260626.md`.
 - Final Basecamp GUI screenshots and recording after building/loading
   `basecamp-ui` in the current recommended Basecamp release.
 - Final narrated demo video showing proof generation with `RISC0_DEV_MODE=0`,
-  localnet/testnet execution, transaction hashes, threshold `1`, threshold `3`,
-  and the user flow.
+  localnet/testnet execution, transaction hashes, threshold `1`, threshold `2`,
+  threshold `3`, and the user flow.
 - Final reviewer pass over README/evidence docs after any evaluator feedback.
 
 ## Current Limitations
@@ -186,7 +186,7 @@ Useful output files:
 - `.local/resumable-approval/latest/resumable-approval-summary.json`
 - `docs/resumable-approval-evidence-20260626.md`
 - `docs/sdk.md`
-- `docs/cost-evidence-20260626.md`
+- `docs/cost-evidence-20260727.md`
 - `docs/final-execution-evidence-20260727.md`
 - `.local/localnet-evidence/latest/localnet-evidence.json`
 - `.local/testnet-evidence/latest/testnet-evidence.json`

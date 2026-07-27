@@ -11,6 +11,7 @@ path.
 - Hosted Logos Testnet v0.2 execution works end to end.
 - The GUI threshold controls are authoritative:
   - a workspace-driven threshold `1` run executes with one approval,
+  - a Basecamp GUI threshold `2` run executes with two approvals,
   - a Basecamp GUI threshold `3` run executes with three approvals.
 
 ## Basecamp GUI Localnet Run
@@ -59,6 +60,40 @@ Included transactions:
 | execute private | `b746b177988f650855eac2833d66476d1fa1d962b0ffcce849a2d2f959726ce2` |
 
 This run proves the execute path is no longer hardcoded to `2-of-3`.
+
+## Basecamp GUI Hosted Testnet Threshold `2`
+
+The same GUI-driven execute path was then rerun through Basecamp with threshold
+`2`.
+
+Key GUI-created proposal values:
+
+| Field | Value |
+| --- | --- |
+| Multisig ID | `46bbdfa044557e3e02eea19e8b115dde46bbdfa044557e3e02eea19e8b115dde` |
+| Threshold | `2` |
+| Approval count | `2` |
+| Aggregate hash | `f0688a181870c960d85448fb54013c015227511acd98a83b421cbffa7b277609` |
+
+Final hosted state:
+
+| Field | Value |
+| --- | --- |
+| Multisig state account | `Dub7uBS7UoFmTbenhxEme4Jh5ao7HadMm49Vh2uadrhT` |
+| Proposal account | `2aT4ghteG6n2wXCrEzfFLUDbqei2EHiXxSqe1f3hPcVj` |
+| Target account | `ArjMdHCb97mVFN7DtCRSyp6bbRsf7iJv4z8WHQkz6Zxo` |
+| Proposal status | `Executed` |
+| Approval count | `2` |
+| Executed aggregate hash | `f0688a181870c960d85448fb54013c015227511acd98a83b421cbffa7b277609` |
+| Target account data | `threshold-approved` |
+
+Included transactions:
+
+| Step | Hash |
+| --- | --- |
+| create multisig | `5fff881389745eaf749615651a710bd3bccb39b72e98c03fdc1dcb275bab6037` |
+| propose | `91fc0526249fb27baa7d3743c789f6ab4800c9edea519bbb84a9a0673d91a0ef` |
+| execute private | `19eed814a3df541a0bb94f9f0a9dfbae9431c8d8e61e9ffaf3607d6125087b5c` |
 
 ## Basecamp GUI Hosted Testnet Threshold `3`
 

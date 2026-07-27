@@ -53,7 +53,7 @@ def markdown(summary: dict) -> str:
             "",
             f"- LEZ public program execution sets a session limit of `{summary['lez_public_execution_cycle_limit']}` cycles.",
             "- The sequencer RPC used by this project exposes transaction lookup but not a receipt field containing per-transaction CU.",
-            "- Treat the RISC0 cycle fields above as measured proof cost, not an official testnet CU bill.",
+            "- Treat the RISC0 cycle fields above as measured proof cost, not an official hosted-testnet CU bill.",
             "- Fill official CU once the hosted testnet explorer/RPC exposes it or the Logos team confirms the accepted mapping.",
         ]
     )

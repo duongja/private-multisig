@@ -114,8 +114,8 @@ can trigger the real repository localnet/testnet execution paths from inside
 Basecamp using the current GUI workspace artifacts.
 
 That means the current GUI threshold, proposal, and aggregate state now shape
-the real execute path. This is enough to prove threshold `1` and threshold `3`
-hosted-testnet execution from the same UI workflow.
+the real execute path. This is enough to prove threshold `1`, threshold `2`,
+and threshold `3` hosted-testnet execution from the same UI workflow.
 
 Current limitation: the proposal editor is still tuned to the project's
 hosted-compatible target-program template. It is not yet a general advanced

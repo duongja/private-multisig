@@ -55,6 +55,7 @@ Current evidence index:
 - [docs/final-execution-evidence-20260727.md](docs/final-execution-evidence-20260727.md)
 - [docs/prize-readiness.md](docs/prize-readiness.md)
 - [docs/basecamp-gui.md](docs/basecamp-gui.md)
+- [docs/cost-evidence-20260727.md](docs/cost-evidence-20260727.md)
 - [docs/testnet-v0.2-check-20260727.md](docs/testnet-v0.2-check-20260727.md)
 
 ## Build
@@ -164,8 +165,8 @@ Summarize proof-cycle and transaction cost evidence:
 cat .local/cost-evidence/latest/cost-summary.md
 ```
 
-The captured cost evidence is summarized in
-[docs/cost-evidence-20260626.md](docs/cost-evidence-20260626.md).
+The current cost/CU position is summarized in
+[docs/cost-evidence-20260727.md](docs/cost-evidence-20260727.md).
 
 Build and inspect the Basecamp UI package:
 
