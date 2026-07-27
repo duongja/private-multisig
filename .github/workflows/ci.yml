@@ -1,0 +1,38 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang libclang-dev pkg-config protobuf-compiler
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: "1.94.0"
+          components: rustfmt
+
+      - name: Prepare LEZ rc5 checkout
+        env:
+          LEZ_REPO: ${{ github.workspace }}/../logos-execution-zone-v0.2.0-rc5-testnet
+        run: ./scripts/ensure-lez-rc5.sh
+
+      - name: Run preflight checks
+        env:
+          LEZ_REPO: ${{ github.workspace }}/../logos-execution-zone-v0.2.0-rc5-testnet
+          RISC0_DEV_MODE: "0"
+          BINDGEN_EXTRA_CLANG_ARGS: "-I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/include/x86_64-linux-gnu -I/usr/include"
+        run: ./scripts/preflight.sh

@@ -1,0 +1,7 @@
+/.local/
+/.scaffold/
+/target/
+**/*.log
+**/*.tmp
+__pycache__/
+*.pyc

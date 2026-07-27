@@ -1,0 +1,20 @@
+class PrivateMultisigUi
+{
+    PROP(QString status READWRITE)
+    PROP(QString cliPath READWRITE)
+    PROP(QString workspacePath READWRITE)
+    SLOT(QString health())
+    SLOT(QString loadWorkspaceState())
+    SLOT(QString generateMembers(QString multisigId))
+    SLOT(QString createConfig(QString multisigId, int threshold))
+    SLOT(QString createProposal(QString multisigId, QString proposalId, QString targetProgramId, QString instructionWords, int targetAccountCount))
+    SLOT(QString approveMember(QString memberId))
+    SLOT(QString aggregateApprovals())
+    SLOT(QString verifyAggregate())
+    SLOT(QString proveAggregate())
+    SLOT(QString runLocalnetExecution())
+    SLOT(QString runHostedTestnetExecution())
+    SLOT(QString testDuplicateAggregate(QString memberId))
+    SLOT(QString runDemoFlow(int threshold, QString proposalId, QString targetProgramId, QString instructionWords, int targetAccountCount))
+    SLOT(QString resetWorkspace())
+}

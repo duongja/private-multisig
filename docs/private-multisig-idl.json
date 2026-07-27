@@ -1,0 +1,487 @@
+{
+  "version": "0.1.0",
+  "name": "private_multisig",
+  "instructions": [
+    {
+      "name": "create_multisig",
+      "accounts": [
+        {
+          "name": "multisig_state",
+          "writable": true,
+          "init": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "create_key"
+              }
+            ]
+          },
+          "visibility": [
+            "public"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "create_key",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "threshold",
+          "type": "u8"
+        },
+        {
+          "name": "member_count",
+          "type": "u8"
+        },
+        {
+          "name": "member_root",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ],
+      "execution": {
+        "public": true,
+        "private_owned": true
+      },
+      "discriminator": [148, 146, 240, 10, 226, 215, 167, 174],
+      "variant": "CreateMultisig"
+    },
+    {
+      "name": "propose",
+      "accounts": [
+        {
+          "name": "multisig_state",
+          "writable": true,
+          "visibility": [
+            "public"
+          ]
+        },
+        {
+          "name": "proposal",
+          "writable": true,
+          "init": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": "private_ms_prop"
+              },
+              {
+                "kind": "arg",
+                "path": "create_key"
+              },
+              {
+                "kind": "arg",
+                "path": "proposal_index"
+              }
+            ]
+          },
+          "visibility": [
+            "public"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "create_key",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "proposal_index",
+          "type": "u64"
+        },
+        {
+          "name": "target_program_id",
+          "type": {
+            "array": [
+              "u32",
+              8
+            ]
+          }
+        },
+        {
+          "name": "target_instruction_data",
+          "type": {
+            "vec": "u32"
+          }
+        },
+        {
+          "name": "target_account_count",
+          "type": "u8"
+        },
+        {
+          "name": "pda_seeds",
+          "type": {
+            "vec": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        },
+        {
+          "name": "authorized_indices",
+          "type": {
+            "vec": "u8"
+          }
+        }
+      ],
+      "execution": {
+        "public": true,
+        "private_owned": true
+      },
+      "discriminator": [93, 253, 82, 168, 118, 33, 102, 90],
+      "variant": "Propose"
+    },
+    {
+      "name": "execute_private",
+      "accounts": [
+        {
+          "name": "multisig_state",
+          "writable": true,
+          "visibility": [
+            "public"
+          ]
+        },
+        {
+          "name": "proposal",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": "private_ms_prop"
+              },
+              {
+                "kind": "arg",
+                "path": "create_key"
+              },
+              {
+                "kind": "arg",
+                "path": "proposal_index"
+              }
+            ]
+          },
+          "visibility": [
+            "public"
+          ]
+        },
+        {
+          "name": "target_accounts",
+          "writable": true,
+          "rest": true,
+          "visibility": [
+            "public"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "create_key",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "proposal_index",
+          "type": "u64"
+        },
+        {
+          "name": "aggregate",
+          "type": {
+            "defined": "AggregateApproval"
+          }
+        }
+      ],
+      "execution": {
+        "public": true,
+        "private_owned": true
+      },
+      "discriminator": [153, 218, 159, 71, 18, 225, 173, 248],
+      "variant": "ExecutePrivate"
+    }
+  ],
+  "accounts": [
+    {
+      "name": "PrivateMultisigState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "create_key",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "threshold",
+            "type": "u8"
+          },
+          {
+            "name": "member_count",
+            "type": "u8"
+          },
+          {
+            "name": "member_root",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "transaction_index",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PrivateProposalState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "index",
+            "type": "u64"
+          },
+          {
+            "name": "multisig_create_key",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "target_program_id",
+            "type": {
+              "array": [
+                "u32",
+                8
+              ]
+            }
+          },
+          {
+            "name": "target_instruction_data",
+            "type": {
+              "vec": "u32"
+            }
+          },
+          {
+            "name": "target_account_count",
+            "type": "u8"
+          },
+          {
+            "name": "pda_seeds",
+            "type": {
+              "vec": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
+          },
+          {
+            "name": "authorized_indices",
+            "type": {
+              "vec": "u8"
+            }
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": "PrivateProposalStatus"
+            }
+          },
+          {
+            "name": "executed_aggregate_hash",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
+          },
+          {
+            "name": "approval_count",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "AggregateApproval",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "multisig_id",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "proposal_id",
+          "type": "u64"
+        },
+        {
+          "name": "member_root",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "threshold",
+          "type": "u8"
+        },
+        {
+          "name": "approval_count",
+          "type": "u8"
+        },
+        {
+          "name": "proposal_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "nullifiers",
+          "type": {
+            "vec": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        },
+        {
+          "name": "aggregate_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PrivateProposalStatus",
+      "kind": "enum",
+      "variants": [
+        {
+          "name": "Active"
+        },
+        {
+          "name": "Executed"
+        },
+        {
+          "name": "Cancelled"
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 2000,
+      "name": "InvalidAccountCount",
+      "msg": "Instruction received the wrong number of accounts"
+    },
+    {
+      "code": 2001,
+      "name": "AlreadyInitialized",
+      "msg": "An init account was already initialized"
+    },
+    {
+      "code": 2002,
+      "name": "InvalidThreshold",
+      "msg": "Threshold must satisfy 1 <= threshold <= member_count"
+    },
+    {
+      "code": 2003,
+      "name": "DecodeState",
+      "msg": "Could not decode private multisig state"
+    },
+    {
+      "code": 2004,
+      "name": "DecodeProposal",
+      "msg": "Could not decode proposal state"
+    },
+    {
+      "code": 2005,
+      "name": "CreateKeyMismatch",
+      "msg": "Instruction create_key does not match stored state"
+    },
+    {
+      "code": 2006,
+      "name": "ProposalIndexMismatch",
+      "msg": "Instruction proposal_index does not match expected proposal index"
+    },
+    {
+      "code": 2007,
+      "name": "ProposalNotActive",
+      "msg": "Proposal is not active"
+    },
+    {
+      "code": 2008,
+      "name": "TargetAccountCountMismatch",
+      "msg": "Target account count does not match the proposal"
+    },
+    {
+      "code": 2009,
+      "name": "InvalidAggregateProof",
+      "msg": "Aggregate threshold approval failed verification"
+    },
+    {
+      "code": 2010,
+      "name": "AccountDataTooLarge",
+      "msg": "Serialized account state exceeds LEZ account data limits"
+    }
+  ],
+  "spec": "spel",
+  "metadata": {
+    "name": "private_multisig",
+    "version": "0.1.0"
+  },
+  "instruction_type": "private_multisig_core::PrivateMultisigInstruction"
+}

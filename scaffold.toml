@@ -1,0 +1,36 @@
+[scaffold]
+version = "0.2.0"
+
+[repos.lez]
+source = "https://github.com/logos-blockchain/logos-execution-zone.git"
+pin = "27360cb7d6ccb2bfbcca7d171bab8a3938490264"
+path = "../logos-execution-zone-v0.2.0-testnet"
+
+[repos.spel]
+source = "https://github.com/logos-co/spel.git"
+pin = "1db7c5f8af3165318f9046c13ab185e24773fd59"
+path = "../spel"
+
+[repos.basecamp]
+source = "https://github.com/logos-co/logos-basecamp.git"
+pin = "a90f7d1bcd5d81c6f657623df67c421e11503e18"
+attr = "app"
+
+[modules.private_multisig_ui]
+flake = "path:./basecamp-ui#lgx"
+role = "project"
+
+[wallet]
+home_dir = ".scaffold/wallet"
+
+[framework]
+kind = "default"
+version = "0.1.0"
+
+[framework.idl]
+spec = "lssa-idl/0.1.0"
+path = "idl"
+
+[localnet]
+port = 3040
+risc0_dev_mode = false
