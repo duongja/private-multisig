@@ -206,7 +206,10 @@ async fn run_localnet_evidence(
     fs::create_dir_all(&out_dir).with_context(|| format!("create {}", out_dir.display()))?;
     let program_path = out_dir.join("private_multisig.bin");
     write_program_binary(&program_path)?;
-    eprintln!("runner: wrote embedded private multisig ELF to {}", program_path.display());
+    eprintln!(
+        "runner: wrote embedded private multisig ELF to {}",
+        program_path.display()
+    );
     let target_program_bytes = fs::read(&target_program_binary)
         .with_context(|| format!("read {}", target_program_binary.display()))?;
     eprintln!(
@@ -231,8 +234,8 @@ async fn run_localnet_evidence(
         program.id() == PRIVATE_MULTISIG_ID,
         "embedded program id mismatch"
     );
-    let target_program = Program::new(target_program_bytes.clone().into())
-        .context("load target program")?;
+    let target_program =
+        Program::new(target_program_bytes.clone().into()).context("load target program")?;
 
     if let (Some(config_path), Some(proposal_path), Some(aggregate_path)) =
         (config_path, proposal_path, aggregate_path)
@@ -253,7 +256,10 @@ async fn run_localnet_evidence(
         .await;
     }
 
-    eprintln!("runner: deploying private multisig program {}", program_id_hex(program.id()));
+    eprintln!(
+        "runner: deploying private multisig program {}",
+        program_id_hex(program.id())
+    );
     let deploy_hash = deploy_program(&client, PRIVATE_MULTISIG_ELF.to_vec())
         .await
         .context("submit private multisig program deployment")?;
@@ -262,7 +268,10 @@ async fn run_localnet_evidence(
         "runner: private multisig deploy {} included={deploy_included}",
         deploy_hash
     );
-    eprintln!("runner: deploying target program {}", program_id_hex(target_program.id()));
+    eprintln!(
+        "runner: deploying target program {}",
+        program_id_hex(target_program.id())
+    );
     let target_deploy_hash = deploy_program(&client, target_program_bytes)
         .await
         .context("submit target program deployment")?;
@@ -310,12 +319,10 @@ async fn run_localnet_evidence(
         b"logos.lp0002.runner.target-pda.v1",
         &[&create_key, b"hello-world-target"],
     );
-    let target_account =
-        AccountId::for_public_pda(&program.id(), &PdaSeed::new(target_pda_seed));
+    let target_account = AccountId::for_public_pda(&program.id(), &PdaSeed::new(target_pda_seed));
     let target_accounts = vec![target_account];
     let target_program_id = target_program.id();
-    let target_instruction_data =
-        Program::serialize_instruction(b"threshold-approved".to_vec())?;
+    let target_instruction_data = Program::serialize_instruction(b"threshold-approved".to_vec())?;
     let propose_instruction = PrivateMultisigInstruction::Propose {
         create_key,
         proposal_index: 1,
@@ -473,7 +480,10 @@ async fn run_workspace_evidence(
         "workspace proposal authorized_indices exceeds target account count"
     );
 
-    eprintln!("runner: deploying private multisig program {}", program_id_hex(program.id()));
+    eprintln!(
+        "runner: deploying private multisig program {}",
+        program_id_hex(program.id())
+    );
     let deploy_hash = deploy_program(&client, PRIVATE_MULTISIG_ELF.to_vec())
         .await
         .context("submit private multisig program deployment")?;
@@ -482,7 +492,10 @@ async fn run_workspace_evidence(
         "runner: private multisig deploy {} included={deploy_included}",
         deploy_hash
     );
-    eprintln!("runner: deploying target program {}", program_id_hex(target_program.id()));
+    eprintln!(
+        "runner: deploying target program {}",
+        program_id_hex(target_program.id())
+    );
     let target_deploy_hash = deploy_program(
         &client,
         fs::read(&target_program_binary)
@@ -612,8 +625,14 @@ async fn run_workspace_evidence(
         },
     };
 
-    anyhow::ensure!(evidence.ok, "one or more transactions were not included before timeout");
-    anyhow::ensure!(state.transaction_index == 1, "unexpected multisig transaction index");
+    anyhow::ensure!(
+        evidence.ok,
+        "one or more transactions were not included before timeout"
+    );
+    anyhow::ensure!(
+        state.transaction_index == 1,
+        "unexpected multisig transaction index"
+    );
     anyhow::ensure!(
         proposal_state.status == PrivateProposalStatus::Executed,
         "proposal was not executed"
@@ -657,7 +676,8 @@ fn write_proposal_template(
     let multisig_id = from_hex32(&multisig_id).context("invalid --multisig-id hex")?;
     let target_program_bytes = fs::read(&target_program_binary)
         .with_context(|| format!("read {}", target_program_binary.display()))?;
-    let target_program = Program::new(target_program_bytes.into()).context("load target program")?;
+    let target_program =
+        Program::new(target_program_bytes.into()).context("load target program")?;
     let target_program_id = if let Some(value) = target_program_id_override {
         parse_program_id(&value)?
     } else {
@@ -707,7 +727,11 @@ fn create_key_for_run(sequencer: &str, out_dir: &PathBuf) -> Hash32 {
         .to_le_bytes();
     hash_chunks(
         b"logos.lp0002.runner.create-key.v1",
-        &[sequencer.as_bytes(), out_dir.to_string_lossy().as_bytes(), &now],
+        &[
+            sequencer.as_bytes(),
+            out_dir.to_string_lossy().as_bytes(),
+            &now,
+        ],
     )
 }
 
@@ -751,7 +775,10 @@ fn parse_words(value: &str) -> Result<Vec<u32>> {
 
 fn parse_program_id(value: &str) -> Result<[u32; 8]> {
     let words = parse_words(value)?;
-    anyhow::ensure!(words.len() == 8, "program id must contain exactly 8 u32 words");
+    anyhow::ensure!(
+        words.len() == 8,
+        "program id must contain exactly 8 u32 words"
+    );
     Ok(words.try_into().expect("checked length"))
 }
 
@@ -780,16 +807,15 @@ fn proposal_from_file(file: &ProposalFile) -> Result<private_multisig_core::Prop
     })
 }
 
-fn aggregate_from_file(
-    file: &AggregateFile,
-) -> Result<private_multisig_core::AggregateApproval> {
+fn aggregate_from_file(file: &AggregateFile) -> Result<private_multisig_core::AggregateApproval> {
     Ok(private_multisig_core::AggregateApproval {
         multisig_id: from_hex32(&file.multisig_id).context("invalid aggregate multisig_id")?,
         proposal_id: file.proposal_id,
         member_root: from_hex32(&file.member_root).context("invalid aggregate member_root")?,
         threshold: file.threshold,
         approval_count: file.approval_count,
-        proposal_hash: from_hex32(&file.proposal_hash).context("invalid aggregate proposal_hash")?,
+        proposal_hash: from_hex32(&file.proposal_hash)
+            .context("invalid aggregate proposal_hash")?,
         nullifiers: file
             .nullifiers
             .iter()
@@ -798,7 +824,6 @@ fn aggregate_from_file(
         aggregate_hash: from_hex32(&file.aggregate_hash).context("invalid aggregate_hash")?,
     })
 }
-
 
 fn ensure_included(label: &str, hash: HashType, included: bool) -> Result<()> {
     anyhow::ensure!(
@@ -823,10 +848,13 @@ async fn send_instruction(
     );
     let witness_set = lee::public_transaction::WitnessSet::from_raw_parts(vec![]);
     let tx = lee::PublicTransaction::new(message, witness_set);
-    Ok(tokio::time::timeout(RPC_SEND_TIMEOUT, client.send_transaction(LeeTransaction::Public(tx)))
-        .await
-        .context("submit public transaction timed out")?
-        .context("submit public transaction")?)
+    Ok(tokio::time::timeout(
+        RPC_SEND_TIMEOUT,
+        client.send_transaction(LeeTransaction::Public(tx)),
+    )
+    .await
+    .context("submit public transaction timed out")?
+    .context("submit public transaction")?)
 }
 
 async fn deploy_program(
