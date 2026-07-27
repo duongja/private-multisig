@@ -6,7 +6,7 @@ private_multisig_ui_plugin` and `view = Main.qml`.
 
 ## What It Demonstrates
 
-- 2-of-3 member setup with shielded-account commitments.
+- configurable threshold member setup with shielded-account commitments.
 - Proposal creation for a threshold-gated action.
 - Member approvals that reveal only commitments/nullifiers in the exported
   evidence view.
@@ -14,6 +14,9 @@ private_multisig_ui_plugin` and `view = Main.qml`.
 - Threshold aggregation state before execution.
 - Backend execution of the same workflow by calling `private_multisig_cli`
   from the Basecamp backend process.
+- Real localnet and hosted-testnet execution from inside Basecamp.
+- Threshold-driven execution where the GUI's current `config.json`,
+  `proposal.json`, and `aggregate.json` drive the actual on-chain call.
 
 The GUI is a Basecamp surface for the workflow. The backend binding delegates to
 the Rust CLI for config/proposal/approval/aggregate/verify/prove, and now also
@@ -108,13 +111,15 @@ After install, restart Basecamp and open `private_multisig_ui`.
 
 The Basecamp backend now calls the real CLI for the threshold approval flow and
 can trigger the real repository localnet/testnet execution paths from inside
-Basecamp.
+Basecamp using the current GUI workspace artifacts.
 
-Current limitation: the on-chain buttons execute the repository's runner-backed
-evidence flow, not an arbitrary user-edited target-account composition. The
-editable Basecamp proposal form still maps to the local threshold/proof flow;
-the hosted-compatible chained-call shape remains in the runner path until the
-proposal schema is extended to expose PDA seeds and authorized indices.
+That means the current GUI threshold, proposal, and aggregate state now shape
+the real execute path. This is enough to prove threshold `1` and threshold `3`
+hosted-testnet execution from the same UI workflow.
+
+Current limitation: the proposal editor is still tuned to the project's
+hosted-compatible target-program template. It is not yet a general advanced
+editor for arbitrary target-program/account composition.
 
 A later deeper binding can link the Rust SDK directly into the C++ backend or a
 Logos Core module once the preferred custom-module API is stable.

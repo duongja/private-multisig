@@ -1,7 +1,21 @@
 # LP-0002 Private Multisig
 
-Prize implementation workspace for LP-0002: a private M-of-N multisig primitive
-for LEZ.
+Prize implementation workspace for LP-0002: a private M-of-N multisig
+primitive for LEZ.
+
+## Current Status
+
+This repository is now in submission-hardening mode.
+
+- Hosted Logos Testnet v0.2 execution works end to end.
+- Basecamp GUI execution works end to end.
+- The GUI threshold controls now drive real on-chain execution, not a fixed
+  hidden runner configuration.
+- The current repository is published at
+  `https://github.com/duongja/private-multisig`.
+
+Reviewer-facing evidence for the current state is collected in
+[docs/final-execution-evidence-20260727.md](docs/final-execution-evidence-20260727.md).
 
 The project starts with the privacy-critical core:
 
@@ -20,6 +34,28 @@ The project starts with the privacy-critical core:
 The remaining submission work is final demo recording, official CU reporting
 once the current testnet/explorer exposes those values, and any evaluator
 feedback on the temporary manual SPEL-shaped IDL.
+
+## Reviewer Quick Path
+
+Minimal reviewer flow:
+
+```bash
+./scripts/preflight.sh
+```
+
+Full local evidence:
+
+```bash
+export RISC0_DEV_MODE=0
+./scripts/preflight.sh --with-localnet
+```
+
+Current evidence index:
+
+- [docs/final-execution-evidence-20260727.md](docs/final-execution-evidence-20260727.md)
+- [docs/prize-readiness.md](docs/prize-readiness.md)
+- [docs/basecamp-gui.md](docs/basecamp-gui.md)
+- [docs/testnet-v0.2-check-20260727.md](docs/testnet-v0.2-check-20260727.md)
 
 ## Build
 
@@ -115,10 +151,11 @@ cat .local/testnet-evidence/latest/testnet-evidence.json
 ```
 
 The script connects to `https://testnet.lez.logos.co/`, deploys the private
-multisig program, deploys a threshold-gated target program, creates a 2-of-3
-multisig, creates a proposal, and executes the proposal after private threshold
-approval. A captured successful run is summarized in
-[docs/testnet-evidence-20260626.md](docs/testnet-evidence-20260626.md).
+multisig program, deploys a threshold-gated target program, creates a multisig,
+creates a proposal, and executes the proposal after private threshold approval.
+The current hosted v0.2 reruns and GUI-backed threshold runs are summarized in
+[docs/final-execution-evidence-20260727.md](docs/final-execution-evidence-20260727.md)
+and [docs/testnet-v0.2-check-20260727.md](docs/testnet-v0.2-check-20260727.md).
 
 Summarize proof-cycle and transaction cost evidence:
 
@@ -140,8 +177,9 @@ nix build ./basecamp-ui#lgx -L --out-link .local/basecamp-ui-lgx
 python3 scripts/inspect-basecamp-ui-lgx.py
 ```
 
-The captured package evidence is summarized in
-[docs/basecamp-gui-evidence-20260626.md](docs/basecamp-gui-evidence-20260626.md).
+The current GUI execution behavior is summarized in
+[docs/basecamp-gui.md](docs/basecamp-gui.md) and
+[docs/final-execution-evidence-20260727.md](docs/final-execution-evidence-20260727.md).
 
 ## Design
 

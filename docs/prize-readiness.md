@@ -26,10 +26,13 @@ This document maps the current repository to LP-0002 success criteria.
   and duplicate approvals are rejected.
 - Basecamp QML + C++ backend GUI package for member setup, proposal creation,
   approval collection, duplicate nullifier rejection, threshold aggregation
-  state, CLI-backed verification, and evidence preview.
+  state, CLI-backed verification, evidence preview, and real localnet/testnet
+  execution.
 - Cost evidence summarizer for RISC0 proof cycles and localnet transaction
   inclusion, following the Logos-recommended `lez-signature-bench` measurement
   style.
+- Workspace-driven execute path where Basecamp GUI threshold and proposal
+  artifacts now drive the actual hosted testnet execution.
 
 ## Proven Locally
 
@@ -76,8 +79,8 @@ This starts a standalone LEZ v0.2 sequencer, deploys the private multisig
 program, deploys a target program, creates a multisig, creates a proposal, and
 executes the target action after private threshold approval.
 
-The latest captured successful localnet run is documented in
-`docs/localnet-evidence-20260625.md`.
+The latest reviewer-facing localnet execution summary is documented in
+`docs/final-execution-evidence-20260727.md`.
 
 Run:
 
@@ -91,8 +94,10 @@ deploys the private multisig program, deploys a target program, creates a
 multisig, creates a proposal, and executes the proposal after private threshold
 approval.
 
-The latest captured successful hosted testnet run is documented in
-`docs/testnet-evidence-20260626.md`.
+The latest hosted v0.2 execution summaries are documented in:
+
+- `docs/testnet-v0.2-check-20260727.md`
+- `docs/final-execution-evidence-20260727.md`
 
 Run:
 
@@ -103,6 +108,9 @@ python3 scripts/basecamp-ui-smoke.py
 This validates the Basecamp `ui_qml` module metadata and the expected QML
 workflow markers. The module lives in `basecamp-ui/`; see
 `docs/basecamp-gui.md`.
+
+The current GUI-backed execution evidence is summarized in
+`docs/final-execution-evidence-20260727.md`.
 
 Run:
 
@@ -120,10 +128,12 @@ summary is documented in `docs/cost-evidence-20260626.md`.
   exposes them. Current proof-cycle evidence is documented.
 - v0.2-compatible SPEL-generated IDL or evaluator-approved replacement for the
   current manual SPEL-shaped IDL.
-- Final Basecamp GUI recording after building/loading `basecamp-ui` in the
-  current recommended Basecamp release.
+- Final Basecamp GUI screenshots and recording after building/loading
+  `basecamp-ui` in the current recommended Basecamp release.
 - Final narrated demo video showing proof generation with `RISC0_DEV_MODE=0`,
-  localnet/testnet execution, transaction hashes, and the user flow.
+  localnet/testnet execution, transaction hashes, threshold `1`, threshold `3`,
+  and the user flow.
+- Final reviewer pass over README/evidence docs after any evaluator feedback.
 
 ## Current Limitations
 
@@ -133,7 +143,7 @@ summary is documented in `docs/cost-evidence-20260626.md`.
   available.
 - The localnet flow uses scaffold's standalone sequencer mode. Hosted v0.2
   testnet evidence is captured separately in
-  `docs/testnet-evidence-20260626.md`.
+  `docs/final-execution-evidence-20260727.md`.
 - The proof circuit currently proves aggregate threshold membership and
   proposal-scoped nullifier uniqueness. It does not hide proposal content; that
   is explicitly out of scope for LP-0002.
@@ -146,9 +156,10 @@ summary is documented in `docs/cost-evidence-20260626.md`.
   package registry release yet. A downstream Logos module can depend on the
   workspace crate directly.
 - `basecamp-ui` calls the real Rust CLI from its C++ backend for the
-  member/proposal/approval/aggregate/verify flow. RISC0 proof generation and
-  LEZ submission remain in the Rust CLI/SDK/localnet scripts until the deeper
-  custom module binding is stabilized.
+  member/proposal/approval/aggregate/verify/prove flow and calls the repository
+  execution path for real LEZ submission. The proposal form is now wired to the
+  hosted-compatible execution template, but arbitrary user-defined chained-call
+  composition is still not exposed as a generalized advanced editor.
 - The current sequencer RPC exposed to this project exposes transaction lookup
   but not a receipt field with official per-transaction CU. The cost evidence
   records measured RISC0 proof cycles and leaves official CU explicitly pending.
@@ -176,5 +187,6 @@ Useful output files:
 - `docs/resumable-approval-evidence-20260626.md`
 - `docs/sdk.md`
 - `docs/cost-evidence-20260626.md`
+- `docs/final-execution-evidence-20260727.md`
 - `.local/localnet-evidence/latest/localnet-evidence.json`
 - `.local/testnet-evidence/latest/testnet-evidence.json`
