@@ -30,9 +30,17 @@ jobs:
           LEZ_REPO: ${{ github.workspace }}/../logos-execution-zone-v0.2.0-testnet
         run: ./scripts/ensure-lez-v0.2.sh
 
+      - name: Install RISC0 toolchain
+        env:
+          RZUP_VERSION: "0.5.0"
+          RISC0_RUST_VERSION: "1.94.1"
+        run: ./scripts/ensure-risc0-toolchain.sh
+
       - name: Run preflight checks
         env:
           LEZ_REPO: ${{ github.workspace }}/../logos-execution-zone-v0.2.0-testnet
           RISC0_DEV_MODE: "0"
+          RZUP_VERSION: "0.5.0"
+          RISC0_RUST_VERSION: "1.94.1"
           BINDGEN_EXTRA_CLANG_ARGS: "-I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/include/x86_64-linux-gnu -I/usr/include"
         run: ./scripts/preflight.sh

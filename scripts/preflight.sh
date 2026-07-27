@@ -43,6 +43,8 @@ cd "$ROOT"
 
 export RISC0_DEV_MODE="${RISC0_DEV_MODE:-0}"
 export BINDGEN_EXTRA_CLANG_ARGS="${BINDGEN_EXTRA_CLANG_ARGS:--I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/include/x86_64-linux-gnu -I/usr/include}"
+export RZUP_VERSION="${RZUP_VERSION:-0.5.0}"
+export RISC0_RUST_VERSION="${RISC0_RUST_VERSION:-1.94.1}"
 
 echo "== Ensure pinned LEZ v0.2.0 checkout =="
 "$ROOT/scripts/ensure-lez-v0.2.sh"
@@ -65,6 +67,9 @@ mapfile -t rust_sources < <(
     -name '*.rs' -print | sort
 )
 rustfmt --edition 2021 --check "${rust_sources[@]}"
+
+echo "== Ensure RISC0 toolchain =="
+"$ROOT/scripts/ensure-risc0-toolchain.sh"
 
 echo "== Core and program tests =="
 cargo test -p private_multisig_core -p private_multisig_program
