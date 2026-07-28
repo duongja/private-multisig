@@ -4,6 +4,7 @@ members = [
     "crates/private_multisig_cli",
     "crates/private_multisig_program",
     "crates/private_multisig_runner",
+    "tools/spel_idl_exporter",
     "methods",
     "methods/guest",
 ]

@@ -73,10 +73,10 @@ pub fn proposal_pda_seed(create_key: &Hash32, proposal_index: u64) -> Hash32 {
     )
 }
 
-// The current local SPEL framework still generates wrappers against the older
-// `nssa_core` API. These handlers intentionally target the v0.2 `lee_core`
-// program model directly; the thin SPEL/IDL wrapper can be restored once the
-// framework exposes matching v0.2 types.
+// The runtime handlers intentionally target the v0.2 `lee_core` program model
+// directly. The repository's SPEL IDL is generated from the thin wrapper source
+// at `spel/private_multisig_idl.rs`, while these handlers remain the canonical
+// on-chain execution path.
 
 #[cfg(test)]
 mod tests {

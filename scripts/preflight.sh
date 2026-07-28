@@ -18,7 +18,7 @@ Runs LP-0002 reproducibility checks.
 Default checks:
   - ensure the pinned LEZ v0.2.0 checkout is present;
   - shell syntax check;
-  - manual IDL validation;
+  - SPEL IDL freshness and validation;
   - Basecamp QML module shape validation;
   - Basecamp backend CLI flow smoke;
   - rustfmt check for this repository's Rust sources;
@@ -54,8 +54,9 @@ echo "== Shell syntax =="
 bash -n scripts/*.sh
 
 echo "== IDL validation =="
+python3 scripts/generate-spel-idl.py --check
 python3 scripts/validate-idl.py
-python3 -m py_compile scripts/validate-idl.py scripts/summarize-cost-evidence.py scripts/basecamp-ui-smoke.py scripts/inspect-basecamp-ui-lgx.py
+python3 -m py_compile scripts/generate-spel-idl.py scripts/validate-idl.py scripts/summarize-cost-evidence.py scripts/basecamp-ui-smoke.py scripts/inspect-basecamp-ui-lgx.py
 
 echo "== Basecamp UI smoke =="
 python3 scripts/basecamp-ui-smoke.py
@@ -63,7 +64,7 @@ python3 scripts/basecamp-ui-smoke.py
 
 echo "== Rust formatting =="
 mapfile -t rust_sources < <(
-  find crates methods \
+  find crates methods tools spel \
     -path '*/target' -prune -o \
     -name '*.rs' -print | sort
 )

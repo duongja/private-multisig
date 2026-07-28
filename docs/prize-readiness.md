@@ -19,8 +19,10 @@ This document maps the current repository to LP-0002 success criteria.
   invalid aggregate proof, wrong account shape, decode failures, and replayed
   proposal status.
 - Local standalone LEZ v0.2 evidence flow with `RISC0_DEV_MODE=0`.
-- Hosted LEZ v0.2 testnet evidence with included transactions for program
-  deployment, multisig creation, proposal creation, and private execution.
+- Hosted LEZ v0.2 testnet evidence with included transactions for multisig
+  creation, proposal creation, and private execution, with deployment
+  inclusion recorded separately because the hosted deploy lookup can lag behind
+  final state.
 - CI workflow and preflight script for reproducible checks.
 - Resumable approval smoke proving persisted partial approvals can be resumed
   and duplicate approvals are rejected.
@@ -92,7 +94,12 @@ export RISC0_DEV_MODE=0
 This connects to hosted LEZ testnet at `https://testnet.lez.logos.co/`,
 deploys the private multisig program, deploys a target program, creates a
 multisig, creates a proposal, and executes the proposal after private threshold
-approval.
+approval. On the current hosted testnet, the private program deployment lookup
+may remain `included=false` within the polling window even when
+`create_multisig`, `propose`, and `execute_private` are included and the final
+proposal state is `Executed`. The runner now records that deployment bit as
+evidence but does not treat it as a false failure when the real workflow and
+final state validate.
 
 The latest hosted v0.2 execution summaries are documented in:
 
@@ -126,8 +133,6 @@ reviewer-facing cost note is documented in `docs/cost-evidence-20260727.md`.
 - Official hosted-testnet CU values for deployment, multisig creation,
   proposal creation, private execution, and target call once the explorer/RPC
   exposes them. Current proof-cycle evidence is documented.
-- v0.2-compatible SPEL-generated IDL or evaluator-approved replacement for the
-  current manual SPEL-shaped IDL.
 - Final Basecamp GUI screenshots and recording after building/loading
   `basecamp-ui` in the current recommended Basecamp release.
 - Final narrated demo video showing proof generation with `RISC0_DEV_MODE=0`,
@@ -137,10 +142,10 @@ reviewer-facing cost note is documented in `docs/cost-evidence-20260727.md`.
 
 ## Current Limitations
 
-- The current IDL is manual because the available local SPEL checkout targets an
-  older `nssa_core` API while LEZ v0.2 programs use `lee_core`. It is validated
-  by `scripts/validate-idl.py` until a v0.2-compatible SPEL generator is
-  available.
+- The published IDL is now generated from a thin SPEL wrapper source, but the
+  runtime handler crate still executes directly on `lee_core` rather than
+  through upstream SPEL runtime macros. That keeps the working v0.2 execution
+  path intact while the upstream runtime remains `nssa_core`-oriented.
 - The localnet flow uses scaffold's standalone sequencer mode. Hosted v0.2
   testnet evidence is captured separately in
   `docs/final-execution-evidence-20260727.md`.

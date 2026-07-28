@@ -31,9 +31,8 @@ The project starts with the privacy-critical core:
 - a Logos Basecamp QML UI package with a C++ backend that calls the real CLI
   for member/proposal/approval aggregation.
 
-The remaining submission work is final demo recording, official CU reporting
-once the current testnet/explorer exposes those values, and any evaluator
-feedback on the temporary manual SPEL-shaped IDL.
+The remaining submission work is final demo recording and official CU reporting
+once the current testnet/explorer exposes those values.
 
 ## Reviewer Quick Path
 
@@ -66,9 +65,10 @@ Run the standard non-localnet preflight:
 ./scripts/preflight.sh
 ```
 
-The preflight includes manual IDL validation:
+The preflight includes SPEL IDL freshness and validation:
 
 ```bash
+python3 scripts/generate-spel-idl.py --check
 python3 scripts/validate-idl.py
 python3 scripts/basecamp-ui-smoke.py
 ```
@@ -154,7 +154,13 @@ cat .local/testnet-evidence/latest/testnet-evidence.json
 The script connects to `https://testnet.lez.logos.co/`, deploys the private
 multisig program, deploys a threshold-gated target program, creates a multisig,
 creates a proposal, and executes the proposal after private threshold approval.
-The current hosted v0.2 reruns and GUI-backed threshold runs are summarized in
+On current hosted testnet, the private program deployment transaction may remain
+`included=false` within the polling window even when the actual
+`create_multisig`, `propose`, and `execute_private` flow succeeds and the final
+proposal/account state is valid. The runner now treats final executed state as
+the authoritative success criterion and keeps the deploy inclusion bit as
+evidence rather than a hard failure. The current hosted v0.2 reruns and
+GUI-backed threshold runs are summarized in
 [docs/final-execution-evidence-20260727.md](docs/final-execution-evidence-20260727.md)
 and [docs/testnet-v0.2-check-20260727.md](docs/testnet-v0.2-check-20260727.md).
 

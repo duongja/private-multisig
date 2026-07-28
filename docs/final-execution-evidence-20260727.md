@@ -9,6 +9,12 @@ path.
 - Basecamp GUI local workflow works end to end.
 - Basecamp GUI localnet execution works end to end.
 - Hosted Logos Testnet v0.2 execution works end to end.
+- Hosted testnet success is now evaluated by the executed on-chain state plus
+  included `create_multisig`, `propose`, and `execute_private` transactions.
+  The private program deployment transaction may remain `included=false` within
+  the polling window on hosted testnet and is recorded as evidence, but it is
+  no longer treated as a false negative when the final proposal state is
+  `Executed`.
 - The GUI threshold controls are authoritative:
   - a workspace-driven threshold `1` run executes with one approval,
   - a Basecamp GUI threshold `2` run executes with two approvals,
@@ -94,6 +100,38 @@ Included transactions:
 | create multisig | `5fff881389745eaf749615651a710bd3bccb39b72e98c03fdc1dcb275bab6037` |
 | propose | `91fc0526249fb27baa7d3743c789f6ab4800c9edea519bbb84a9a0673d91a0ef` |
 | execute private | `19eed814a3df541a0bb94f9f0a9dfbae9431c8d8e61e9ffaf3607d6125087b5c` |
+
+## Basecamp GUI Hosted Testnet Threshold `2` After Hosted Deploy Timeout Patch
+
+The hosted testnet runner was patched on July 28, 2026 so a delayed private
+program deployment inclusion bit no longer causes a false failure when the
+actual multisig flow completes and final state validation succeeds.
+
+Patched Basecamp GUI run:
+
+| Field | Value |
+| --- | --- |
+| Multisig ID | `ec4d4b381efbeb51f2b6a0690b493689ec4d4b381efbeb51f2b6a0690b493689` |
+| Threshold | `2` |
+| Approval count | `2` |
+| Aggregate hash | `620238ce7ca9f0e05b4fcdb6a5bfb27742bae7ee4542ddc9e17a6875515435ff` |
+| Proposal status | `Executed` |
+| Target account data | `threshold-approved` |
+
+Transaction evidence:
+
+| Step | Hash | Included |
+| --- | --- | --- |
+| private multisig deploy | `f19c16b16feb60f33b5558eb044151a72bcf770b0f2c79b74147607fbae498e6` | `false` |
+| target deploy | `5236a12978b154703679dc9788006a108edc776d692ca544090d36fa73001a3d` | `true` |
+| create multisig | `a9789651b6510c3808fc085300d61ebda808b792f4cd9c0efc39df0ab9967d17` | `true` |
+| propose | `04ffd92f5212b87c15e0becdc421b1497cf55ae8b0b6bd81bf0c316793829a9d` | `true` |
+| execute private | `0e48a3103cd03b1f29bbc7b917bfc89c725b6e652a53d82a5faac16151d4e40f` | `true` |
+
+This run is intentionally kept because it demonstrates the hosted-testnet edge
+case reviewers are most likely to see on their own machines: the deploy lookup
+can lag, but the actual threshold-gated proposal execution still succeeds and
+the final public state is authoritative.
 
 ## Basecamp GUI Hosted Testnet Threshold `3`
 

@@ -8,6 +8,7 @@
         {
           "name": "multisig_state",
           "writable": true,
+          "signer": false,
           "init": true,
           "pda": {
             "seeds": [
@@ -50,11 +51,20 @@
           }
         }
       ],
+      "discriminator": [
+        148,
+        146,
+        240,
+        10,
+        226,
+        215,
+        167,
+        174
+      ],
       "execution": {
         "public": true,
         "private_owned": true
       },
-      "discriminator": [148, 146, 240, 10, 226, 215, 167, 174],
       "variant": "CreateMultisig"
     },
     {
@@ -63,6 +73,8 @@
         {
           "name": "multisig_state",
           "writable": true,
+          "signer": false,
+          "init": false,
           "visibility": [
             "public"
           ]
@@ -70,6 +82,7 @@
         {
           "name": "proposal",
           "writable": true,
+          "signer": false,
           "init": true,
           "pda": {
             "seeds": [
@@ -143,11 +156,20 @@
           }
         }
       ],
+      "discriminator": [
+        93,
+        253,
+        82,
+        168,
+        118,
+        33,
+        102,
+        90
+      ],
       "execution": {
         "public": true,
         "private_owned": true
       },
-      "discriminator": [93, 253, 82, 168, 118, 33, 102, 90],
       "variant": "Propose"
     },
     {
@@ -156,6 +178,8 @@
         {
           "name": "multisig_state",
           "writable": true,
+          "signer": false,
+          "init": false,
           "visibility": [
             "public"
           ]
@@ -163,6 +187,8 @@
         {
           "name": "proposal",
           "writable": true,
+          "signer": false,
+          "init": false,
           "pda": {
             "seeds": [
               {
@@ -186,6 +212,8 @@
         {
           "name": "target_accounts",
           "writable": true,
+          "signer": false,
+          "init": false,
           "rest": true,
           "visibility": [
             "public"
@@ -213,11 +241,20 @@
           }
         }
       ],
+      "discriminator": [
+        153,
+        218,
+        159,
+        71,
+        18,
+        225,
+        173,
+        248
+      ],
       "execution": {
         "public": true,
         "private_owned": true
       },
-      "discriminator": [153, 218, 159, 71, 18, 225, 173, 248],
       "variant": "ExecutePrivate"
     }
   ],
@@ -339,149 +376,149 @@
       }
     }
   ],
+  "instruction_type": "private_multisig_core::PrivateMultisigInstruction",
+  "spec": "spel",
   "types": [
     {
+      "name": "PrivateProposalStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Active"
+          },
+          {
+            "name": "Executed"
+          },
+          {
+            "name": "Cancelled"
+          }
+        ]
+      }
+    },
+    {
       "name": "AggregateApproval",
-      "kind": "struct",
-      "fields": [
-        {
-          "name": "multisig_id",
-          "type": {
-            "array": [
-              "u8",
-              32
-            ]
-          }
-        },
-        {
-          "name": "proposal_id",
-          "type": "u64"
-        },
-        {
-          "name": "member_root",
-          "type": {
-            "array": [
-              "u8",
-              32
-            ]
-          }
-        },
-        {
-          "name": "threshold",
-          "type": "u8"
-        },
-        {
-          "name": "approval_count",
-          "type": "u8"
-        },
-        {
-          "name": "proposal_hash",
-          "type": {
-            "array": [
-              "u8",
-              32
-            ]
-          }
-        },
-        {
-          "name": "nullifiers",
-          "type": {
-            "vec": {
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "multisig_id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "proposal_id",
+            "type": "u64"
+          },
+          {
+            "name": "member_root",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "threshold",
+            "type": "u8"
+          },
+          {
+            "name": "approval_count",
+            "type": "u8"
+          },
+          {
+            "name": "proposal_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "nullifiers",
+            "type": {
+              "vec": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
+          },
+          {
+            "name": "aggregate_hash",
+            "type": {
               "array": [
                 "u8",
                 32
               ]
             }
           }
-        },
-        {
-          "name": "aggregate_hash",
-          "type": {
-            "array": [
-              "u8",
-              32
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "PrivateProposalStatus",
-      "kind": "enum",
-      "variants": [
-        {
-          "name": "Active"
-        },
-        {
-          "name": "Executed"
-        },
-        {
-          "name": "Cancelled"
-        }
-      ]
+        ]
+      }
     }
   ],
   "errors": [
     {
       "code": 2000,
       "name": "InvalidAccountCount",
-      "msg": "Instruction received the wrong number of accounts"
+      "msg": "invalid account count"
     },
     {
       "code": 2001,
       "name": "AlreadyInitialized",
-      "msg": "An init account was already initialized"
+      "msg": "account is already initialized"
     },
     {
       "code": 2002,
       "name": "InvalidThreshold",
-      "msg": "Threshold must satisfy 1 <= threshold <= member_count"
+      "msg": "invalid threshold"
     },
     {
       "code": 2003,
       "name": "DecodeState",
-      "msg": "Could not decode private multisig state"
+      "msg": "could not decode private multisig state"
     },
     {
       "code": 2004,
       "name": "DecodeProposal",
-      "msg": "Could not decode proposal state"
+      "msg": "could not decode proposal state"
     },
     {
       "code": 2005,
       "name": "CreateKeyMismatch",
-      "msg": "Instruction create_key does not match stored state"
+      "msg": "create_key mismatch"
     },
     {
       "code": 2006,
       "name": "ProposalIndexMismatch",
-      "msg": "Instruction proposal_index does not match expected proposal index"
+      "msg": "proposal index mismatch"
     },
     {
       "code": 2007,
       "name": "ProposalNotActive",
-      "msg": "Proposal is not active"
+      "msg": "proposal is not active"
     },
     {
       "code": 2008,
       "name": "TargetAccountCountMismatch",
-      "msg": "Target account count does not match the proposal"
+      "msg": "target account count mismatch"
     },
     {
       "code": 2009,
       "name": "InvalidAggregateProof",
-      "msg": "Aggregate threshold approval failed verification"
+      "msg": "invalid aggregate threshold proof"
     },
     {
       "code": 2010,
       "name": "AccountDataTooLarge",
-      "msg": "Serialized account state exceeds LEZ account data limits"
+      "msg": "account data exceeds LEZ data limit"
     }
-  ],
-  "spec": "spel",
-  "metadata": {
-    "name": "private_multisig",
-    "version": "0.1.0"
-  },
-  "instruction_type": "private_multisig_core::PrivateMultisigInstruction"
+  ]
 }
