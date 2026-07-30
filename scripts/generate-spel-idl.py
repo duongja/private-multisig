@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 WRAPPER_PATH = ROOT / "spel" / "private_multisig_idl.rs"
 OUT_PATH = ROOT / "docs" / "private-multisig-idl.json"
+ALT_OUT_PATH = ROOT / "docs" / "private-multisig.idl.json"
 
 
 ERRORS = [
@@ -93,7 +94,8 @@ def main() -> None:
 
     if check_only:
         current = OUT_PATH.read_text()
-        if current != rendered:
+        alt_current = ALT_OUT_PATH.read_text()
+        if current != rendered or alt_current != rendered:
             raise SystemExit(
                 "SPEL IDL is out of date. Run scripts/generate-spel-idl.py to refresh it."
             )
@@ -101,6 +103,7 @@ def main() -> None:
         return
 
     OUT_PATH.write_text(rendered)
+    ALT_OUT_PATH.write_text(rendered)
     print(json.dumps({"ok": True, "idl": str(OUT_PATH), "mode": "write"}))
 
 
