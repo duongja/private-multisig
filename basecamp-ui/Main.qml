@@ -1098,22 +1098,34 @@ Item {
                                 font.bold: true
                             }
 
-                            TextArea {
+                            ScrollView {
+                                id: evidenceScroll
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
-                                readOnly: true
-                                wrapMode: TextEdit.NoWrap
-                                selectByMouse: true
-                                text: evidenceJson
-                                color: "#d5dde6"
-                                selectedTextColor: "#101214"
-                                selectionColor: "#9bd1ff"
-                                font.family: "monospace"
-                                font.pixelSize: 12
+                                clip: true
+                                ScrollBar.horizontal.policy: ScrollBar.AsNeeded
+                                ScrollBar.vertical.policy: ScrollBar.AsNeeded
+
                                 background: Rectangle {
                                     color: bg0
                                     border.color: border
                                     radius: 8
+                                }
+
+                                TextEdit {
+                                    id: evidenceView
+                                    readOnly: true
+                                    wrapMode: TextEdit.NoWrap
+                                    selectByMouse: true
+                                    textFormat: TextEdit.PlainText
+                                    text: evidenceJson
+                                    color: "#d5dde6"
+                                    selectedTextColor: "#101214"
+                                    selectionColor: "#9bd1ff"
+                                    font.family: "monospace"
+                                    font.pixelSize: 12
+                                    width: Math.max(evidenceScroll.availableWidth, contentWidth)
+                                    height: Math.max(evidenceScroll.availableHeight, contentHeight)
                                 }
                             }
                         }
