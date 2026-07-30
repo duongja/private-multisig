@@ -3,21 +3,26 @@
 Prize implementation workspace for LP-0002: a private M-of-N multisig
 primitive for LEZ.
 
-## Current Status
+## Overview
 
-This repository is now in submission-hardening mode.
+This repository contains a working LP-0002 implementation:
 
-- Hosted Logos Testnet v0.2 execution works end to end.
-- Basecamp GUI execution works end to end.
-- The GUI threshold controls now drive real on-chain execution, not a fixed
-  hidden runner configuration.
-- The current repository is published at
-  `https://github.com/duongja/private-multisig`.
+- hosted Logos Testnet v0.2 execution works end to end,
+- Basecamp GUI execution works end to end,
+- the GUI threshold controls drive the real on-chain execution path,
+- reviewer evidence and reproducible scripts are included in the repository.
 
-Reviewer-facing evidence for the current state is collected in
-[docs/final-execution-evidence-20260727.md](docs/final-execution-evidence-20260727.md).
+The current repository is published at
+`https://github.com/duongja/private-multisig`.
 
-The project starts with the privacy-critical core:
+Start with these reviewer-facing artifacts:
+
+- [docs/final-execution-evidence-20260727.md](docs/final-execution-evidence-20260727.md)
+- [docs/prize-readiness.md](docs/prize-readiness.md)
+- [docs/basecamp-gui.md](docs/basecamp-gui.md)
+- [docs/cost-evidence-20260727.md](docs/cost-evidence-20260727.md)
+
+The implementation includes the privacy-critical core:
 
 - member commitments for shielded LEZ accounts,
 - deterministic Merkle membership roots,
@@ -31,8 +36,10 @@ The project starts with the privacy-critical core:
 - a Logos Basecamp QML UI package with a C++ backend that calls the real CLI
   for member/proposal/approval aggregation.
 
-The remaining submission work is final demo recording and official CU reporting
-once the current testnet/explorer exposes those values.
+The only remaining submission artifact outside the repository is the final
+recorded demo. Official hosted-testnet CU values remain dependent on what the
+current testnet RPC and explorer expose; the current cost evidence documents
+that limitation directly.
 
 ## Reviewer Quick Path
 
