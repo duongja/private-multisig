@@ -34,17 +34,16 @@ def run_spel_generate() -> dict:
         "spel_idl_exporter",
         "--quiet",
         "--locked",
-        "--offline",
         "--",
         str(WRAPPER_PATH),
     ]
-    proc = subprocess.run(
-        cmd,
-        cwd=ROOT,
-        check=True,
-        capture_output=True,
-        text=True,
-    )
+    proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+    if proc.returncode != 0:
+        if proc.stdout:
+            sys.stderr.write(proc.stdout)
+        if proc.stderr:
+            sys.stderr.write(proc.stderr)
+        raise SystemExit(f"SPEL IDL generation failed with exit code {proc.returncode}")
     if proc.stderr:
         sys.stderr.write(proc.stderr)
     return json.loads(proc.stdout)
