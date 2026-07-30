@@ -15,6 +15,9 @@ This repository contains a working LP-0002 implementation:
 The current repository is published at
 `https://github.com/duongja/private-multisig`.
 
+Narrated demo video:
+`https://drive.google.com/file/d/1vHEHCbz9aWfdcXFQjfUJpXHGlw9heY_u/view?usp=sharing`
+
 Start with these reviewer-facing artifacts:
 
 - [docs/final-execution-evidence-20260727.md](docs/final-execution-evidence-20260727.md)
@@ -36,10 +39,20 @@ The implementation includes the privacy-critical core:
 - a Logos Basecamp QML UI package with a C++ backend that calls the real CLI
   for member/proposal/approval aggregation.
 
-The only remaining submission artifact outside the repository is the final
-recorded demo. Official hosted-testnet CU values remain dependent on what the
-current testnet RPC and explorer expose; the current cost evidence documents
-that limitation directly.
+Official hosted-testnet CU values remain dependent on what the current testnet
+RPC and explorer expose; the current cost evidence documents that limitation
+directly.
+
+## Submission Facts
+
+- Repository:
+  `https://github.com/duongja/private-multisig`
+- Demo video:
+  `https://drive.google.com/file/d/1vHEHCbz9aWfdcXFQjfUJpXHGlw9heY_u/view?usp=sharing`
+- Current reviewed commit:
+  `87f8d864bbb65223312b509ce33a7a69f9161b4a`
+- Example hosted testnet `execute_private` transaction:
+  `e1805cae3ab6e46239cc823cc45d79e45a78ba80e57168e8fc50e240b9e70b59`
 
 ## Reviewer Quick Path
 
@@ -63,6 +76,8 @@ Current evidence index:
 - [docs/basecamp-gui.md](docs/basecamp-gui.md)
 - [docs/cost-evidence-20260727.md](docs/cost-evidence-20260727.md)
 - [docs/testnet-v0.2-check-20260727.md](docs/testnet-v0.2-check-20260727.md)
+- narrated demo:
+  `https://drive.google.com/file/d/1vHEHCbz9aWfdcXFQjfUJpXHGlw9heY_u/view?usp=sharing`
 
 ## Build
 

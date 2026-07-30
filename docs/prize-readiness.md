@@ -105,6 +105,8 @@ The latest hosted v0.2 execution summaries are documented in:
 
 - `docs/testnet-v0.2-check-20260727.md`
 - `docs/final-execution-evidence-20260727.md`
+- narrated demo video:
+  `https://drive.google.com/file/d/1vHEHCbz9aWfdcXFQjfUJpXHGlw9heY_u/view?usp=sharing`
 
 Run:
 
@@ -128,17 +130,21 @@ Run:
 This writes proof-cycle and localnet transaction cost evidence. The current
 reviewer-facing cost note is documented in `docs/cost-evidence-20260727.md`.
 
-## Pending For Final Prize Submission
+## Submission Artifacts
 
 - Official hosted-testnet CU values for deployment, multisig creation,
   proposal creation, private execution, and target call once the explorer/RPC
   exposes them. Current proof-cycle evidence is documented.
-- Final Basecamp GUI screenshots and recording after building/loading
-  `basecamp-ui` in the current recommended Basecamp release.
-- Final narrated demo video showing proof generation with `RISC0_DEV_MODE=0`,
-  localnet/testnet execution, transaction hashes, threshold `1`, threshold `2`,
-  threshold `3`, and the user flow.
-- Final reviewer pass over README/evidence docs after any evaluator feedback.
+- Narrated demo video:
+  `https://drive.google.com/file/d/1vHEHCbz9aWfdcXFQjfUJpXHGlw9heY_u/view?usp=sharing`
+- Reviewer-facing repository:
+  `https://github.com/duongja/private-multisig`
+- Current reviewed commit:
+  `87f8d864bbb65223312b509ce33a7a69f9161b4a`
+- Example hosted testnet `execute_private` transaction:
+  `e1805cae3ab6e46239cc823cc45d79e45a78ba80e57168e8fc50e240b9e70b59`
+- Final Basecamp GUI screenshots can still be added if an evaluator wants a
+  static gallery in addition to the recorded demo.
 
 ## Current Limitations
 
